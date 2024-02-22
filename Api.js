@@ -31,6 +31,8 @@ export const fetchPokemonList = async () => {
           name: frenchName.charAt(0).toUpperCase() + frenchName.slice(1), 
           imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonDetails.data.id}.png`,
           gifUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemonDetails.data.id}.gif`,
+          shinyImageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemonDetails.data.id}.png`,
+          pokemonNoShiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonDetails.data.id}.png`,
           id: pokemonDetails.data.id,
           types: types,
           weight: pokemonDetails.data.weight,

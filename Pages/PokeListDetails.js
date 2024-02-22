@@ -3,24 +3,24 @@ import { View, Text, FlatList, Image, StyleSheet, TextInput } from 'react-native
 import { fetchPokemonList } from '../Api'; 
 
 const typeColors = {
-  normal: '#C8C4BC',
-  fire: '#FFC1A1',
-  water: '#A1D6E2',
-  electric: '#FFFA92',
+  normal: '#AAA67F',
+  fire: '#F57D31',
+  water: '#6493EB',
+  electric: '#F9CF30',
   grass: '#74CB48',
-  ice: '#D1EECC',
-  fighting: '#D9BF77',
-  poison: '#A675A1',
-  ground: '#CCAB7A',
-  flying: '#A1A3D6',
-  psychic: '#FF92A1',
-  bug: '#C2D59B',
-  rock: '#C4BC8C',
-  ghost: '#787391',
-  dragon: '#7768FC',
-  dark: '#776854',
-  steel: '#C4C4CE',
-  fairy: '#D6A1AD',
+  ice: '#9AD6DF',
+  fighting: '#C12239',
+  poison: '#A43E9E',
+  ground: '#DEC16B',
+  flying: '#A891EC',
+  psychic: '#FB5584',
+  bug: '#A7B723',
+  rock: '#B69E31',
+  ghost: '#70559B',
+  dragon: '#7037FF',
+  dark: '#75574C',
+  steel: '#B7B9D0',
+  fairy: '#E69EAC',
 };
 
 const PokeListDetails = ({ route }) => {
@@ -66,7 +66,11 @@ const PokeListDetails = ({ route }) => {
       <Text style={styles.description}>{pokemon.description}</Text>
     </View>
     <View style={styles.containerDesc}>
-      <Text style={styles.desc}>Stats Bases</Text>
+      <Text style={styles.desc}>Shiny</Text>
+      <View style={styles.imagesContainer}>
+        <Image style={styles.image} source={{ uri: pokemon.pokemonNoShiny }} />
+        <Image style={styles.image} source={{ uri: pokemon.shinyImageUrl }} />
+      </View>
     </View>
   </View>
   </View>
@@ -87,24 +91,48 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'contain',
     position: 'absolute',
-    top: -190,
+    top: -200,
     right: 80,
     zIndex: 1,
   },
+  imagesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
   mainContent: {
     zIndex: 1,
+    marginTop: 60,
+  },
+  containerStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  progressBarContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  progressBar: {
+    height: 20,
+    width: '100%',
+    backgroundColor: '#f3f3f3',
+    borderRadius: 50,
+    overflow: 'hidden',
+  },
+  progress: {
+    height: '100%',
+    backgroundColor: '#6890F0',
+    borderRadius: 50,
   },
   pokeballImage: {
     width: 230,
     height: 230,
     marginLeft: 140,
     resizeMode: 'contain',
-  },
-  image: {
-    width: 200, 
-    height: 200, 
-    resizeMode: 'contain',
-    zIndex: 1,
   },
   id: {
     fontSize: 12,
@@ -113,7 +141,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '95%',
-    height: '70%',
+    height: '85%',
     borderRadius: 10,
     backgroundColor: '#fff',
     padding: 20,
