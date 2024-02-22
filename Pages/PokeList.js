@@ -5,7 +5,7 @@ import { fetchPokemonList } from '../Api';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TeamCrew from './TeamCrew';
-import Settings from './Settings';
+import Regions from './Region';
 import Account from './Account';
 
 const Tab = createBottomTabNavigator();
@@ -21,11 +21,11 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
             iconName = focused ? 'ios-list' : 'ios-list-outline';
           } else if (route.name === 'Team') {
             iconName = focused ? 'ios-people' : 'ios-people-outline';
-          } else if (route.name === 'Paramètres') {
-            iconName = focused ? 'ios-settings' : 'ios-settings-outline'; 
+          } else if (route.name === 'Régions') { // Change this line
+            iconName = focused ? 'location-outline' : 'location-outline'; 
           } else if (route.name === 'Compte') {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
-          }  
+          } 
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -50,8 +50,8 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
         options={{ headerShown: false }}
       />
       <Tab.Screen 
-        name="Paramètres" 
-        component={Settings} 
+        name="Régions" 
+        component={Regions} 
         options={{ headerShown: false }}
       />
       <Tab.Screen 

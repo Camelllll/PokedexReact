@@ -27,6 +27,7 @@ export const fetchPokemonList = async () => {
         // Récupérer le nom français du Pokémon
         const frenchName = speciesResponse.data.names.find(name => name.language.name === 'fr').name;
 
+
         return {
           name: frenchName.charAt(0).toUpperCase() + frenchName.slice(1), 
           imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonDetails.data.id}.png`,
