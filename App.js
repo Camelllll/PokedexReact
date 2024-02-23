@@ -4,6 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Image, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import PokeList from './Pages/PokeList';
 import PokeListDetails from './Pages/PokeListDetails';
+import { Animated } from 'react-native';
+import { useEffect, useState } from 'react';
+
 
 const typeColors = {
   normal: '#AAA67F',
@@ -27,14 +30,53 @@ const typeColors = {
 };
 
 const HomeScreen = ({ navigation }) => {
+  const [animationValue] = useState(new Animated.Value(1));
+
+  const startAnimation = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animationValue, {
+          toValue: 1.2,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animationValue, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ).start();
+  };
+
+  useEffect(() => {
+    startAnimation();
+  }, []);
+
   const handleImagePress = () => {
     navigation.navigate('PokedexMain'); 
   };
 
   return (
     <TouchableOpacity onPress={handleImagePress} style={styles.container}>
+      <Animated.Text
+        style={{
+          ...styles.text,
+          transform: [{ scale: animationValue }],
+        }}
+      >
+        Bienvenue sur ton Pokédex !
+      </Animated.Text>
+      <Animated.Text
+        style={{
+          ...styles.text,
+          transform: [{ scale: animationValue }],
+        }}
+      >
+        Appuie sur l'écran pour commencer
+      </Animated.Text>
       <Image
-        source={require('./assets/pikachu.png')}
+        source={require('./assets/pikachu2.png')}
         style={styles.image}
       />
     </TouchableOpacity>
@@ -132,9 +174,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbd404',
   },
   image: {
-    width: 400,
-    height: 300,
+    width: 420,
+    height: 320,
     marginTop: 250,
+    marginLeft: 43,
     resizeMode: 'contain',
   },
   loadingImage: {
@@ -160,7 +203,18 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
-    marginLeft: 10, // Ajouter une marge à gauche
+    marginLeft: 10,
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 5,
+
   },
   backButtonImage: {
     width: 25,

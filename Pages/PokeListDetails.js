@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TextInput } from 'react-native';
-import { fetchPokemonList } from '../Api'; 
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const typeColors = {
   normal: '#AAA67F',
@@ -25,8 +25,12 @@ const typeColors = {
 
 const PokeListDetails = ({ route }) => {
   const { pokemon } = route.params;
+  const [liked, setLiked] = useState(false);
   
-
+  const handleLikePress = () => {
+    setLiked(!liked);
+  };
+  
   return (
     <View style={[styles.container, {backgroundColor: typeColors[pokemon.types[0]]}]}>
   <Image
@@ -37,6 +41,15 @@ const PokeListDetails = ({ route }) => {
   <Image style={styles.ImgPokemon} source={{ uri: pokemon.imageUrl }} />
     <View style={styles.card}>
     <Text style={styles.name}>{pokemon.name}</Text>
+    <View style={styles.likeContainer}>
+      <TouchableOpacity onPress={handleLikePress}>
+        <Ionicons
+          name={liked ? 'heart' : 'heart-outline'}
+          size={28}
+          color={liked ? 'red' : 'red'}
+        />
+      </TouchableOpacity>
+    </View>
     <Text style={styles.id}>#{pokemon.id}</Text>
     <View style={styles.typesContainer}>
       {pokemon.types.map((type, index) => (
@@ -45,6 +58,7 @@ const PokeListDetails = ({ route }) => {
         </View>
       ))}
     </View>
+    {liked && <Text style={styles.likeText}>Ce Pokémon est un de vos Favoris !</Text>}
     <View style={styles.statsContainer}>
     <View style={styles.stat}>
       <View style={styles.statTop}>
@@ -85,6 +99,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
     backgroundColor: '#B8B8B8',
+  },
+  likeContainer: {
+    position: 'absolute',
+    right: 0,
+    top: 10,
+    padding: 30,
   },
   ImgPokemon: {
     width: 200,
@@ -234,6 +254,12 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 5,
     marginBottom: 5,
+  },
+  likeText: {
+    fontSize: 14,
+    color: 'black',
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   statValue: {
     fontSize: 14,

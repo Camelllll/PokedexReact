@@ -3,7 +3,7 @@ import { View, Text, FlatList, Image, StyleSheet, TextInput } from 'react-native
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { fetchPokemonList } from '../Api';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import TeamCrew from './TeamCrew';
 import Regions from './Region';
 import Account from './Account';
@@ -21,7 +21,7 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
             iconName = focused ? 'ios-list' : 'ios-list-outline';
           } else if (route.name === 'Team') {
             iconName = focused ? 'ios-people' : 'ios-people-outline';
-          } else if (route.name === 'Régions') { // Change this line
+          } else if (route.name === 'Régions') { 
             iconName = focused ? 'location-outline' : 'location-outline'; 
           } else if (route.name === 'Compte') {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
@@ -62,6 +62,7 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
     </Tab.Navigator>
   );
 };
+
 const PokeList = ({ navigation }) => {
 
   const [isLoading, setLoading] = useState(true);
@@ -95,6 +96,7 @@ const PokeList = ({ navigation }) => {
           style={{ width: 100, height: 100 }} 
         />
       </View>
+      
     );
   }
 
