@@ -36,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
     Animated.loop(
       Animated.sequence([
         Animated.timing(animationValue, {
-          toValue: 1.2,
+          toValue: 1.1,
           duration: 1000,
           useNativeDriver: true,
         }),
@@ -65,15 +65,7 @@ const HomeScreen = ({ navigation }) => {
           transform: [{ scale: animationValue }],
         }}
       >
-        Bienvenue sur ton Pokédex !
-      </Animated.Text>
-      <Animated.Text
-        style={{
-          ...styles.text,
-          transform: [{ scale: animationValue }],
-        }}
-      >
-        Appuie sur l'écran pour commencer
+        Touch the screen to start
       </Animated.Text>
       <Image
         source={require('./assets/pikachu2.png')}
