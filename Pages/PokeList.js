@@ -3,6 +3,7 @@ import { View, Text, FlatList, Image, StyleSheet, TextInput } from 'react-native
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { fetchPokemonList } from '../Api';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import TeamCrew from './TeamCrew';
 import Regions from './Region';
@@ -138,29 +139,29 @@ const renderPokemonRow = ({ item }) => {
 
   return (
     <TouchableOpacity onPress={() => handlePokemonClick(item)}>
-      <View style={[styles.pokemonRow, { backgroundColor }]} >
-        <View style={styles.leftContainer}>
-          <Text style={styles.pokemonId}>N°{item.id}</Text>
-          <Text style={styles.pokemonName}>{item.name}</Text>
-        </View>
-        <View style={styles.rightContainer}>
-          <Image source={{ uri: item.imageUrl }} style={styles.image} />
-        </View>
-        <View style={styles.typeContainer}>
-          {item.types.map(type => (
-            <View
-              key={type}
-              style={[
-                styles.typeCircle,
-                { backgroundColor: typeColors[type] },
-              ]}
-            >
-              <Text style={styles.pokemonType}>{type}</Text>
-            </View>
-          ))}
-        </View>
+    <View style={[styles.pokemonRow, { backgroundColor }]} >
+      <View style={styles.leftContainer}>
+        <Text style={styles.pokemonId}>N°{item.id}</Text>
+        <Text style={styles.pokemonName}>{item.name}</Text>
       </View>
-    </TouchableOpacity>
+      <View style={styles.rightContainer}>
+        <Image source={{ uri: item.imageUrl }} style={styles.image} />
+      </View>
+      <View style={styles.typeContainer}>
+        {item.types.map(type => (
+          <View
+            key={type}
+            style={[
+              styles.typeCircle,
+              { backgroundColor: typeColors[type] },
+            ]}
+          >
+            <Text style={styles.pokemonType}>{type}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  </TouchableOpacity>
   );
 };
 

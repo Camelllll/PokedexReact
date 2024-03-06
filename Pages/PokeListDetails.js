@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
 const typeColors = {
@@ -29,6 +30,23 @@ const PokeListDetails = ({ route }) => {
   
   const handleLikePress = () => {
     setLiked(!liked);
+    addToTeam(pokemon);
+  };
+
+  const addToTeam = async (pokemon) => {
+    try {
+      let team = await AsyncStorage.getItem('@team');
+      if (!team) {
+        team = [];
+      } else {
+        team = JSON.parse(team);
+      }
+  
+      team.push(pokemon);
+      await AsyncStorage.setItem('@team', JSON.stringify(team));
+    } catch (e) {
+      console.error(e);
+    }
   };
   
   return (
@@ -41,15 +59,6 @@ const PokeListDetails = ({ route }) => {
   <Image style={styles.ImgPokemon} source={{ uri: pokemon.imageUrl }} />
     <View style={styles.card}>
     <Text style={styles.name}>{pokemon.name}</Text>
-    <View style={styles.likeContainer}>
-      <TouchableOpacity onPress={handleLikePress}>
-        <Ionicons
-          name={liked ? 'heart' : 'heart-outline'}
-          size={28}
-          color={liked ? 'red' : 'red'}
-        />
-      </TouchableOpacity>
-    </View>
     <Text style={styles.id}>#{pokemon.id}</Text>
     <View style={styles.typesContainer}>
       {pokemon.types.map((type, index) => (
@@ -57,8 +66,11 @@ const PokeListDetails = ({ route }) => {
           <Text style={styles.pokemonType}>{type}</Text>
         </View>
       ))}
+      <TouchableOpacity onPress={handleLikePress}>
+        <Ionicons name="heart-outline" size={24} color="red" />
+      </TouchableOpacity>
     </View>
-    {liked && <Text style={styles.likeText}>Ce Pokémon est un de vos Favoris !</Text>}
+    {liked && <Text style={styles.likeText}>Ce Pokémon est dans votre équipe !</Text>}
     <View style={styles.statsContainer}>
     <View style={styles.stat}>
       <View style={styles.statTop}>
@@ -179,6 +191,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     marginTop: 5,
+  },
+  teamButton: {
+    backgroundColor: '#6890F0',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  teamButtonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
   name: {
     fontSize: 22,
