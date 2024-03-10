@@ -3,9 +3,10 @@ import { View, Text, FlatList, Image, StyleSheet, TextInput } from 'react-native
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { fetchPokemonList } from '../Api';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
 import TeamCrew from './TeamCrew';
-import Settings from './Settings';
+import Regions from './Region';
 import Account from './Account';
 
 const Tab = createBottomTabNavigator();
@@ -18,14 +19,14 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
           let iconName;
 
           if (route.name === 'Pokedex') {
-            iconName = focused ? 'ios-list' : 'ios-list-outline';
-          } else if (route.name === 'Team') {
-            iconName = focused ? 'ios-people' : 'ios-people-outline';
-          } else if (route.name === 'Paramètres') {
-            iconName = focused ? 'ios-settings' : 'ios-settings-outline'; 
+            iconName = focused ? 'list' : 'list-outline';
+          } else if (route.name === 'Équipe') {
+            iconName = focused ? 'people' : 'people-outline';
+          } else if (route.name === 'Régions') { 
+            iconName = focused ? 'location' : 'location-outline'; 
           } else if (route.name === 'Compte') {
-            iconName = focused ? 'ios-person' : 'ios-person-outline';
-          }  
+            iconName = focused ? 'person' : 'person-outline';
+          } 
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -45,13 +46,13 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
         options={{ headerShown: false }}
       />
       <Tab.Screen 
-        name="Team" 
+        name="Équipe" 
         component={TeamCrew} 
         options={{ headerShown: false }}
       />
       <Tab.Screen 
-        name="Paramètres" 
-        component={Settings} 
+        name="Régions" 
+        component={Regions} 
         options={{ headerShown: false }}
       />
       <Tab.Screen 
@@ -62,6 +63,7 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
     </Tab.Navigator>
   );
 };
+
 const PokeList = ({ navigation }) => {
 
   const [isLoading, setLoading] = useState(true);
@@ -95,6 +97,7 @@ const PokeList = ({ navigation }) => {
           style={{ width: 100, height: 100 }} 
         />
       </View>
+      
     );
   }
 
@@ -136,29 +139,29 @@ const renderPokemonRow = ({ item }) => {
 
   return (
     <TouchableOpacity onPress={() => handlePokemonClick(item)}>
-      <View style={[styles.pokemonRow, { backgroundColor }]} >
-        <View style={styles.leftContainer}>
-          <Text style={styles.pokemonId}>N°{item.id}</Text>
-          <Text style={styles.pokemonName}>{item.name}</Text>
-        </View>
-        <View style={styles.rightContainer}>
-          <Image source={{ uri: item.imageUrl }} style={styles.image} />
-        </View>
-        <View style={styles.typeContainer}>
-          {item.types.map(type => (
-            <View
-              key={type}
-              style={[
-                styles.typeCircle,
-                { backgroundColor: typeColors[type] },
-              ]}
-            >
-              <Text style={styles.pokemonType}>{type}</Text>
-            </View>
-          ))}
-        </View>
+    <View style={[styles.pokemonRow, { backgroundColor }]} >
+      <View style={styles.leftContainer}>
+        <Text style={styles.pokemonId}>N°{item.id}</Text>
+        <Text style={styles.pokemonName}>{item.name}</Text>
       </View>
-    </TouchableOpacity>
+      <View style={styles.rightContainer}>
+        <Image source={{ uri: item.imageUrl }} style={styles.image} />
+      </View>
+      <View style={styles.typeContainer}>
+        {item.types.map(type => (
+          <View
+            key={type}
+            style={[
+              styles.typeCircle,
+              { backgroundColor: typeColors[type] },
+            ]}
+          >
+            <Text style={styles.pokemonType}>{type}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  </TouchableOpacity>
   );
 };
 
@@ -224,26 +227,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 5,
   },
-  pokemonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    width: 350,
-    height: 120,
-    alignItems: 'center', 
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    marginTop: 40,
-    marginLeft: 2,
-    marginRight: 2,
-    paddingHorizontal: 12,
-  },
+pokemonRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  backgroundColor: '#fff',
+  borderRadius: 12,
+  width: 350,
+  height: 120,
+  alignItems: 'center', 
+  marginTop: 40,
+  marginLeft: 2,
+  marginRight: 2,
+  paddingHorizontal: 12,
+},
   searchInput: {
     height: 40,
     borderColor: '#000',
@@ -255,13 +252,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 110,
+    height: 110,
     marginRight: 10,
   },
   pokemonId: {
     fontSize: 18,
-    color: 'black',
+    color: 'grey',
     fontWeight: 'bold',
     marginBottom: 15,
   },
