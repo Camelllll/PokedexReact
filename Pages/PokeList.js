@@ -19,14 +19,14 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
           let iconName;
 
           if (route.name === 'Pokedex') {
-        iconName = focused ? 'list' : 'list-outline';
-      } else if (route.name === 'Team') {
-        iconName = focused ? 'people' : 'people-outline';
-      } else if (route.name === 'Régions') { 
-        iconName = focused ? 'location' : 'location-outline'; 
-      } else if (route.name === 'Compte') {
-        iconName = focused ? 'person' : 'person-outline';
-      } 
+            iconName = focused ? 'list' : 'list-outline';
+          } else if (route.name === 'Team') {
+            iconName = focused ? 'people' : 'people-outline';
+          } else if (route.name === 'Régions') { 
+            iconName = focused ? 'location' : 'location-outline'; 
+          } else if (route.name === 'Compte') {
+            iconName = focused ? 'person' : 'person-outline';
+          } 
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },

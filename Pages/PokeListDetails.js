@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SvgUri } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
 
 const typeColors = {
@@ -67,8 +68,8 @@ const PokeListDetails = ({ route }) => {
         </View>
       ))}
       <TouchableOpacity onPress={handleLikePress}>
-        <Ionicons name="heart-outline" size={24} color="red" />
-      </TouchableOpacity>
+        <Ionicons name={liked ? 'heart' : 'heart-outline'} size={24} color="red" />
+    </TouchableOpacity>
     </View>
     {liked && <Text style={styles.likeText}>Ce Pokémon est dans votre équipe !</Text>}
     <View style={styles.statsContainer}>

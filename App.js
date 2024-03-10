@@ -68,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
         Touch the screen to start
       </Animated.Text>
       <Image
-        source={require('./assets/pikachu2.png')}
+        source={require('./assets/img/pikachu2.png')}
         style={styles.image}
       />
     </TouchableOpacity>

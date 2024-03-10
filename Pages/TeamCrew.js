@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import PokemonCard from './PokemonCard';
 
 
 const TeamCrew = () => {
@@ -43,17 +44,13 @@ const TeamCrew = () => {
 
   return (
     <View>
-      <FlatList
-        data={team}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item.name}</Text>
-            <Image source={{ uri: item.imageUrl }} style={styles.image} />
-            <Button title="Supprimer de l'équipe" onPress={() => removeFromTeam(item)} />
-          </View>
-        )}
-      />
+    <FlatList
+      data={team}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <PokemonCard pokemon={item} onRemove={removeFromTeam} />
+      )}
+    />
     </View>
   );
 };
