@@ -20,7 +20,7 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
 
           if (route.name === 'Pokedex') {
             iconName = focused ? 'list' : 'list-outline';
-          } else if (route.name === 'Team') {
+          } else if (route.name === 'Équipe') {
             iconName = focused ? 'people' : 'people-outline';
           } else if (route.name === 'Régions') { 
             iconName = focused ? 'location' : 'location-outline'; 
@@ -46,7 +46,7 @@ const PokeListWithTabNavigator = ({ navigation, route }) => {
         options={{ headerShown: false }}
       />
       <Tab.Screen 
-        name="Team" 
+        name="Équipe" 
         component={TeamCrew} 
         options={{ headerShown: false }}
       />
